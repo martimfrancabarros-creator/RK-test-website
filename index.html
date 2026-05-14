@@ -477,7 +477,7 @@
     }
     .why-inner {
       max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 0.65fr 1fr; gap: 3rem; align-items: center;
+      display: grid; grid-template-columns: 0.7fr 1fr; gap: 3rem; align-items: center;
     }
     .why-visual {
       position: relative;
@@ -486,10 +486,31 @@
     }
     .why-img-wrap {
       position: relative; border-radius: 3px; overflow: hidden;
-      aspect-ratio: 1/1;
+      aspect-ratio: 4/5;
       background: #1b1b1b;
       box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(46,125,52,0.15);
     }
+    /* carousel slides */
+    .why-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .why-slide.why-active { opacity: 1; }
+    /* dot indicators */
+    .why-dots {
+      position: absolute; bottom: 0.75rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 3;
+    }
+    .why-dot {
+      width: 6px; height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,0.3);
+      transition: background 0.4s, width 0.4s;
+      cursor: pointer;
+    }
+    .why-dot.why-dot-active { background: #56c460; width: 18px; }
     .why-img-placeholder {
       width: 100%; height: 100%;
       background:
@@ -503,16 +524,16 @@
       filter: drop-shadow(0 0 40px rgba(86,196,96,0.3));
     }
     .why-badge {
-      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      position: absolute; bottom: -1rem; right: -1rem;
       background: #2e7d34; color: #f0ede6;
-      padding: 1.5rem; border-radius: 3px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(86,196,96,0.2);
+      padding: 0.7rem 0.9rem; border-radius: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(86,196,96,0.2);
     }
     .why-badge-num {
-      font-family: 'Bebas Neue', cursive; font-size: 2rem; line-height: 1;
+      font-family: 'Bebas Neue', cursive; font-size: 1.2rem; line-height: 1;
       display: block;
     }
-    .why-badge-text { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+    .why-badge-text { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; }
 
     .why-features { display: flex; flex-direction: column; gap: 0; }
     .why-feature {
@@ -1050,17 +1071,27 @@
 <section id="sobre" class="why-section">
   <div class="why-inner" style="padding: 0 2.5rem; max-width: 1200px; margin: 0 auto;">
     <div class="why-visual reveal">
-      <div class="why-img-wrap" style="background-image:url('brand_assets/team-sobre.jpg');background-size:cover;background-position:center center;"></div>
+      <div class="why-img-wrap" id="whyCarousel">
+        <div class="why-slide why-active" style="background-image:url('brand_assets/rk-foto.jpg');background-position:center top;"></div>
+        <div class="why-slide" style="background-image:url('brand_assets/rk-foto-2.jpg');"></div>
+        <div class="why-slide" style="background-image:url('brand_assets/rk-foto-3.jpg');"></div>
+        <div class="why-slide" style="background-image:url('brand_assets/rk-foto-4.jpg');background-position:center top;"></div>
+        <div class="why-dots" id="whyDots">
+          <div class="why-dot why-dot-active" onclick="whyGoTo(0)"></div>
+          <div class="why-dot" onclick="whyGoTo(1)"></div>
+          <div class="why-dot" onclick="whyGoTo(2)"></div>
+          <div class="why-dot" onclick="whyGoTo(3)"></div>
+        </div>
+      </div>
       <div class="why-badge">
-        <span class="why-badge-num">10+</span>
-        <span class="why-badge-text">Anos de Experiência</span>
+        <span class="why-badge-text" style="font-size:0.75rem;letter-spacing:0.15em;">Resultados</span>
       </div>
     </div>
 
     <div>
       <div class="section-label reveal">Porquê a RK?</div>
       <h2 class="section-heading reveal reveal-delay-1">Excelência que<br><em>pode sentir</em></h2>
-      <p class="section-sub reveal reveal-delay-2" style="margin-bottom: 2.5rem;">Não somos apenas instaladores — somos parceiros de conforto. Com uma equipa certificada e materiais de primeira linha, garantimos resultados duradouros.</p>
+      <p class="section-sub reveal reveal-delay-2" style="margin-bottom: 2.5rem;">Não somos apenas instaladores, somos parceiros de conforto. Com uma equipa certificada e materiais de primeira linha, garantimos resultados duradouros.</p>
 
       <div class="why-features">
         <div class="why-feature reveal">
@@ -1438,33 +1469,37 @@
     var statsEl = document.querySelector('.hero-stats');
     if (!statsEl) return;
 
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    // easeOutExpo: rockets off the start, glides smoothly to a stop
+    function easeOutExpo(t) {
+      return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
 
     function runCounter(el) {
       var target   = parseInt(el.dataset.count, 10);
-      var prefix   = el.dataset.prefix  || '';
-      var suffix   = el.dataset.suffix  || '';
-      var duration = 1600;
+      var prefix   = el.dataset.prefix || '';
+      var suffix   = el.dataset.suffix || '';
+      var duration = 2400;
       var start    = null;
       el.textContent = prefix + '0' + suffix;
       function step(ts) {
         if (!start) start = ts;
         var progress = Math.min((ts - start) / duration, 1);
-        el.textContent = prefix + Math.round(easeOut(progress) * target) + suffix;
+        var eased = easeOutExpo(progress);
+        el.textContent = prefix + Math.round(eased * target) + suffix;
         if (progress < 1) requestAnimationFrame(step);
         else el.textContent = prefix + target + suffix;
       }
       requestAnimationFrame(step);
     }
 
-    // Trigger once stats are visible — delay slightly so the reveal fade plays first
+    // Trigger once stats are visible — stagger each number slightly
     var fired = false;
     var obs = new IntersectionObserver(function(entries) {
       if (entries[0].isIntersecting && !fired) {
         fired = true;
         var nums = statsEl.querySelectorAll('.hero-stat-num[data-count]');
         nums.forEach(function(el, i) {
-          setTimeout(function() { runCounter(el); }, 1100 + i * 160);
+          setTimeout(function() { runCounter(el); }, 1000 + i * 220);
         });
         obs.disconnect();
       }
@@ -1487,6 +1522,27 @@
     cards.forEach(function(card, i) {
       card.addEventListener('click', function() { window.psGoTo(i); });
     });
+  })();
+
+  // ── About Us photo carousel
+  (function() {
+    var slides = document.querySelectorAll('#whyCarousel .why-slide');
+    var dots   = document.querySelectorAll('#whyDots .why-dot');
+    var current = 0;
+    var total   = slides.length;
+
+    window.whyGoTo = function(idx) {
+      slides[current].classList.remove('why-active');
+      dots[current].classList.remove('why-dot-active');
+      current = (idx + total) % total;
+      slides[current].classList.add('why-active');
+      dots[current].classList.add('why-dot-active');
+    };
+
+    // Auto-advance every 4 seconds
+    setInterval(function() {
+      window.whyGoTo(current + 1);
+    }, 4000);
   })();
 
   // ── Form submit handler
