@@ -834,7 +834,7 @@
       .hero-blend { display: none; }
 
       /* Services */
-      .isvc-container { height: 380px; padding: 0 1.5rem; }
+      .isvc-container { height: 380px; padding: 0 1.5rem; } /* desktop tablet — horizontal layout */
       .isvc-title { font-size: 1.1rem; }
       .isvc-desc { font-size: 0.8rem; }
       .svc-section-header { padding: 0 1.5rem 1.5rem; }
@@ -898,13 +898,13 @@
       /* Services panels — vertical stack on mobile */
       .isvc-container {
         flex-direction: column;
-        height: 516px; /* 5×52px + 1×220px + 5×4px gaps */
-        overflow: hidden;
+        height: auto; /* let all 6 panels stack naturally */
+        overflow: visible;
         gap: 4px;
         padding: 0 1.2rem;
       }
       .isvc-panel {
-        flex: 0 0 52px; min-width: unset;
+        flex: 0 0 54px; min-width: unset;
         width: 100%; border-radius: 10px;
         transition: flex-basis 0.55s cubic-bezier(0.4,0,0.2,1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.55s ease, transform 0.55s ease;
       }
@@ -967,9 +967,9 @@
     /* ── SMALL PHONES (≤ 390px) ── */
     @media (max-width: 390px) {
       .hero-heading { font-size: clamp(1.7rem, 7.5vw, 2.2rem); }
-      .isvc-container { height: 240px; }
       .section-heading { font-size: clamp(1.4rem, 6.5vw, 1.9rem); }
       .hero-stat-num { font-size: 1.5rem; }
+      .isvc-panel.active { flex: 0 0 200px; }
     }
 
     /* Mobile menu */
