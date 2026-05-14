@@ -512,6 +512,27 @@
       cursor: pointer;
     }
     .why-dot.why-dot-active { background: #56c460; width: 18px; }
+    /* carousel nav arrows */
+    .why-arrow {
+      position: absolute; top: 50%; z-index: 4;
+      transform: translateY(-50%);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(14,14,14,0.65); backdrop-filter: blur(8px);
+      border: 1px solid rgba(86,196,96,0.3);
+      color: #f0ede6; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .why-img-wrap:hover .why-arrow { opacity: 1; }
+    .why-arrow:hover {
+      background: #2e7d34; border-color: #56c460;
+      box-shadow: 0 0 18px rgba(86,196,96,0.35);
+      transform: translateY(-50%) scale(1.1);
+    }
+    .why-arrow svg { width: 16px; height: 16px; }
+    .why-arrow-prev { left: 0.65rem; }
+    .why-arrow-next { right: 0.65rem; }
     .why-img-placeholder {
       width: 100%; height: 100%;
       background:
@@ -926,6 +947,7 @@
       .isvc-link  { font-size: 0.72rem; }
 
       /* About Us */
+      .why-arrow { opacity: 1; } /* always show arrows on touch screens */
       .why-inner { gap: 1.5rem; }
       .why-img-wrap { aspect-ratio: 4/3; }
       .why-feature { padding: 0.65rem 0; }
@@ -1196,6 +1218,12 @@
         <div class="why-slide" style="background-image:url('brand_assets/rk-foto-2.jpg');"></div>
         <div class="why-slide" style="background-image:url('brand_assets/rk-foto-3.jpg');"></div>
         <div class="why-slide" style="background-image:url('brand_assets/rk-foto-4.jpg');background-position:center top;"></div>
+        <button class="why-arrow why-arrow-prev" onclick="whyGoTo(whyCurrent-1)" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="why-arrow why-arrow-next" onclick="whyGoTo(whyCurrent+1)" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
         <div class="why-dots" id="whyDots">
           <div class="why-dot why-dot-active" onclick="whyGoTo(0)"></div>
           <div class="why-dot" onclick="whyGoTo(1)"></div>
@@ -1648,20 +1676,20 @@
   (function() {
     var slides = document.querySelectorAll('#whyCarousel .why-slide');
     var dots   = document.querySelectorAll('#whyDots .why-dot');
-    var current = 0;
-    var total   = slides.length;
+    var total  = slides.length;
+    window.whyCurrent = 0;
 
     window.whyGoTo = function(idx) {
-      slides[current].classList.remove('why-active');
-      dots[current].classList.remove('why-dot-active');
-      current = (idx + total) % total;
-      slides[current].classList.add('why-active');
-      dots[current].classList.add('why-dot-active');
+      slides[window.whyCurrent].classList.remove('why-active');
+      dots[window.whyCurrent].classList.remove('why-dot-active');
+      window.whyCurrent = (idx + total) % total;
+      slides[window.whyCurrent].classList.add('why-active');
+      dots[window.whyCurrent].classList.add('why-dot-active');
     };
 
     // Auto-advance every 4 seconds
     setInterval(function() {
-      window.whyGoTo(current + 1);
+      window.whyGoTo(window.whyCurrent + 1);
     }, 4000);
   })();
 
