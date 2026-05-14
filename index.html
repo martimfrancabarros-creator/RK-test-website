@@ -898,12 +898,15 @@
       /* Services panels — vertical stack on mobile */
       .isvc-container {
         flex-direction: column;
-        height: auto; gap: 4px;
+        height: 516px; /* 5×52px + 1×220px + 5×4px gaps */
+        overflow: hidden;
+        gap: 4px;
         padding: 0 1.2rem;
       }
       .isvc-panel {
         flex: 0 0 52px; min-width: unset;
         width: 100%; border-radius: 10px;
+        transition: flex-basis 0.55s cubic-bezier(0.4,0,0.2,1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.55s ease, transform 0.55s ease;
       }
       .isvc-panel.active { flex: 0 0 220px; }
       .isvc-bg { background-size: cover !important; }
