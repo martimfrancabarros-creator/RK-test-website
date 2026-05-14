@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>RK CLIMA-FÁCIL — Climatização Profissional</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -816,40 +816,136 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ── MOBILE ── */
+    /* ── RESPONSIVE ── */
+
+    /* ── TABLET (≤ 1024px) ── */
     @media (max-width: 1024px) {
-      .hero-content { padding: 9rem 2.5rem 5rem; }
-      .hero-image-panel { width: 100%; opacity: 0.25; }
-      .hero-image-panel::before { width: 100%; background: linear-gradient(to right, #0e0e0e 0%, rgba(14,14,14,0.85) 100%); }
+      /* Hero */
+      .hero-content { padding: 7rem 2rem 3rem; text-align: center; }
       .hero-text { max-width: 100%; }
       .hero-eyebrow { justify-content: center; }
-      .hero-sub { margin: 0 auto 2.8rem; }
+      .hero-sub { margin: 0 auto 1.6rem; }
       .hero-actions { justify-content: center; }
       .hero-stats { justify-content: center; }
-      .isvc-container { height: 400px; padding: 0 1.5rem; }
-      .isvc-title { font-size: 1.25rem; }
-      .why-inner { grid-template-columns: 1fr; }
+      .hero-image-panel { width: 100%; opacity: 0.2; }
+      .hero-image-panel::before { width: 100%; background: linear-gradient(to right, #0e0e0e, rgba(14,14,14,0.9)); }
+      .hero-blend { display: none; }
+
+      /* Services */
+      .isvc-container { height: 380px; padding: 0 1.5rem; }
+      .isvc-title { font-size: 1.1rem; }
+      .isvc-desc { font-size: 0.8rem; }
+      .svc-section-header { padding: 0 1.5rem 1.5rem; }
+
+      /* About Us */
+      .why-inner { grid-template-columns: 1fr; gap: 2rem; }
       .why-img-wrap { aspect-ratio: 16/9; }
       .why-badge { bottom: -1rem; right: 1rem; }
+      .why-visual { padding-top: 0; }
+
+      /* Process */
       .ps-grid { gap: 1.2rem; }
+
+      /* Testimonials */
       .testimonials-grid { grid-template-columns: 1fr; }
-      .contact-inner { grid-template-columns: 1fr; }
+
+      /* Contact */
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
       .contact-form-wrap { padding-top: 0; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
     }
+
+    /* ── MOBILE (≤ 640px) ── */
     @media (max-width: 640px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links, .nav-cta { display: none; }
+      /* Nav */
+      nav {
+        padding: 0.2rem 1.2rem;
+        grid-template-columns: 1fr auto;
+      }
+      .nav-links { display: none; }
+      .nav-cta-wrap .nav-cta { display: none; }
       .hamburger { display: flex; }
-      .section, .process-section, .contact-section { padding: 40px 1.5rem; }
-      .why-section, .testimonials-section { padding: 40px 1.5rem; }
-      .svc-section { padding: 40px 0; }
-      .ps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .footer-top { grid-template-columns: 1fr; }
+      .nav-logo { margin-left: 0; }
+      .nav-logo img { height: 48px; }
+
+      /* Hero */
+      .hero { min-height: 100svh; max-height: none; }
+      .hero-content { padding: 6rem 1.2rem 2.5rem; height: auto; min-height: 100svh; }
+      .hero-heading { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 0.8rem; }
+      .hero-sub { font-size: 0.88rem; margin-bottom: 1.2rem; }
+      .hero-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; padding: 0.9rem 1.5rem; }
+      .hero-stats { flex-wrap: wrap; gap: 1.2rem; justify-content: center; padding-top: 1.2rem; margin-top: 1.2rem; }
+      .hero-stat-num { font-size: 1.8rem; }
+      .hero-stat-label { font-size: 0.72rem; }
+
+      /* Section padding */
+      .section, .contact-section { padding: 48px 1.2rem; }
+      .process-section { padding: 48px 1.2rem; }
+      .why-section, .testimonials-section { padding: 48px 1.2rem; }
+      .svc-section { padding: 48px 0; }
+      .svc-section-header { padding: 0 1.2rem 1.2rem; }
+
+      /* Section typography */
+      .section-heading { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .section-sub { font-size: 0.84rem; }
+      .section-label { font-size: 0.75rem; }
+
+      /* Services panels — horizontal scroll on mobile */
+      .isvc-container {
+        height: 280px; padding: 0 1.2rem;
+        gap: 3px;
+      }
+      .isvc-title { font-size: 0.95rem; }
+      .isvc-desc { font-size: 0.76rem; -webkit-line-clamp: 2; line-clamp: 2; }
+      .isvc-icon { width: 36px; height: 36px; }
+      .isvc-label { padding: 0 0.8rem; bottom: 1rem; }
+
+      /* About Us */
+      .why-inner { gap: 1.5rem; }
+      .why-img-wrap { aspect-ratio: 4/3; }
+      .why-feature { padding: 0.65rem 0; }
+      .why-feature-title { font-size: 0.95rem; }
+      .why-feature-desc { font-size: 0.82rem; }
+
+      /* Process */
+      .ps-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+      .ps-card { padding: 1.2rem 1.2rem 1rem; }
+      .ps-title { font-size: 0.95rem; }
+      .ps-desc { font-size: 0.8rem; }
+      .ps-arrow-r { right: -14px; }
+      .ps-arrow-d { bottom: -14px; }
+      .ps-arrow-l { left: -14px; }
+
+      /* Testimonials */
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonial-card { padding: 1.2rem; }
+
+      /* Contact */
+      .contact-inner { gap: 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
-      .hero-content { padding: 8rem 1.5rem 3rem; }
-      footer { padding: 3rem 1.5rem 1.5rem; }
-      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .form-input, .form-select, .form-textarea { font-size: 1rem; }
+      .form-submit { font-size: 0.82rem; padding: 0.95rem; }
+
+      /* Footer */
+      footer { padding: 2.5rem 1.2rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 1.8rem; padding-bottom: 2rem; }
+      .footer-logo img { height: 52px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .certifications { flex-wrap: wrap; }
+
+      /* Toast */
+      .toast { min-width: calc(100vw - 2.4rem); max-width: calc(100vw - 2.4rem); bottom: 1rem; }
+    }
+
+    /* ── SMALL PHONES (≤ 390px) ── */
+    @media (max-width: 390px) {
+      .hero-heading { font-size: clamp(1.7rem, 7.5vw, 2.2rem); }
+      .isvc-container { height: 240px; }
+      .section-heading { font-size: clamp(1.4rem, 6.5vw, 1.9rem); }
+      .hero-stat-num { font-size: 1.5rem; }
     }
 
     /* Mobile menu */
